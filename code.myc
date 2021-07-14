@@ -1,0 +1,9 @@
+fib = [1, 1, 2, 3, 5, 8, 13];
+c = 0;
+sum = 0;
+while c < 7 do
+  sum = sum + fib[c];
+  c = c + 1
+end;
+return sum
+
