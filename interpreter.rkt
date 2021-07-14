@@ -1,3 +1,5 @@
+#lang racket
+
 (require parser-tools/lex
          (prefix-in : parser-tools/lex-sre)
          parser-tools/yacc
@@ -34,9 +36,9 @@
 	   [("then") (token-THEN-key)]
 	   [("else") (token-ELSE-key)]
 	   [("return") (token-RETURN-key)]
-	   [("null") (token-NULL-key)]
-	   [("true") (token-TRUE-key)]
-	   [("false") (token-FALSE-key)]
+	   [("None") (token-NULL-key)]
+	   [("True") (token-TRUE-key)]
+	   [("False") (token-FALSE-key)]
 	   [else (token-VAR (string->symbol lexeme))]
 	  )
    ]
@@ -49,13 +51,13 @@
 (define-tokens group-a (NUM STRING VAR))
 (define-empty-tokens group-b (EOF PLUS SEMICOLON EQUAL LT GT ASSIGN NOT-EQUAL MINUS MULTIPLY DIVIDE OPEN-PAR CLOSE-PAR OPEN-BRA CLOSE-BRA COMMA WHILE-key DO-key END-key IF-key THEN-key ELSE-key RETURN-key NULL-key TRUE-key FALSE-key))
 
-(define-datatype keyword keyword?)
-(define-datatype exp exp?)
-(define-datatype aexp aexp?)
-(define-datatype bexp bexp?)
-(define-datatype cexp cexp?)
-(define-datatype list-values list-values?)
-(define-datatype list-member list-member?)
+;(define-datatype keyword keyword?)
+;(define-datatype exp exp?)
+;(define-datatype aexp aexp?)
+;(define-datatype bexp bexp?)
+;(define-datatype cexp cexp?)
+;(define-datatype list-values list-values?)
+;(define-datatype list-member list-member?)
 
 (define-datatype command command?
  (single-keyword (kwd keyword?))
@@ -394,7 +396,7 @@
   (negative-cexp (nce) (negative-value (value-of-cexp nce env)))
   (exp-in-paras (e) (value-of-exp e env))
   (pos-number (num) num)
-  (null-exp () 'null)
+  (null-exp () 'None)
   (variable (var) (apply-env var env))
   (true-exp () #t)
   (false-exp () #f)
@@ -446,11 +448,12 @@
  (run-program (open-input-file filepath))
 )
 
-(evaluate "code.myc")
+;(evaluate "code.myc")
 
 ;(run-program (open-input-string "fib = [1, 1, 2, 3, 5, 8, 13]; c = 0; sum = 0; while c < 7 do sum = sum + fib[c]; c = c + 1 end; return sum"))
-;(run-program (open-input-string "x = [[\"salam\", null], false]; return x[0][1] == null"))
+;(run-program (open-input-string "x = [[\"salam\", None], false]; return x[0][1] == None"))
 ;(run-program (open-input-string "x = -[[true, 1], false]"))
+(run-program (open-input-string "x = False; return x"))
 ;(run-program (open-input-string "x = [1, 2]; y = [3, 4]; z = y + x"))
 ;(run-program (open-input-string "x = \"hi\"; y = x + x"))
 ;(run-program (open-input-string "x = true + [false, true]"))
