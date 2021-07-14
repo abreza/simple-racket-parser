@@ -28,6 +28,19 @@
    ["]" (token-CLOSE-BRA)]
    ["," (token-COMMA)]
    [":" (token-THEN-key)]
+   ["+=" (token-PLUS-EQUAL)]
+   ["-=" (token-MINUSE-EQUAL)]
+   ["*=" (token-MULTIPLY-EQUAL)]
+   ["/=" (token-MDIVIDE-EQUAL)]
+   ["%=" (token-MOD-EQUAL)]
+   ["**=" (token-POW-EQUAL)]
+   ["//=" (token-DD-EQUAL)]
+   ["==" (token-EQUAL-EQUAL)]
+   ["<=" (token-LT-EQUAL)]
+   [">=" (token-GT-EQUAL)]
+   ["//" (token-DD)]
+   ["%" (token-MOD)]
+   ["**" (token-POW)]
    [(:+ (:or (char-range #\a #\z) (char-range #\A #\Z)))
       (case lexeme
 	   [("while") (token-WHILE-key)]
@@ -39,6 +52,16 @@
 	   [("None") (token-NULL-key)]
 	   [("True") (token-TRUE-key)]
 	   [("False") (token-FALSE-key)]
+           [("global") (token-GLOBAL-key)]
+           [("def") (token-DEF-key)]
+           [("for") (token-FOR-key)]
+           [("in") (token-in)]
+           [("pass") (token-pass)]
+           [("break") (token-break)]
+           [("continue") (token-continue)]
+           [("or") (token-or)]
+           [("and") (token-and)]
+           [("not") (token-not)]
 	   [else (token-VAR (string->symbol lexeme))]
 	  )
    ]
@@ -49,7 +72,7 @@
 )
 
 (define-tokens group-a (NUM STRING VAR))
-(define-empty-tokens group-b (EOF PLUS SEMICOLON EQUAL LT GT ASSIGN NOT-EQUAL MINUS MULTIPLY DIVIDE OPEN-PAR CLOSE-PAR OPEN-BRA CLOSE-BRA COMMA WHILE-key DO-key END-key IF-key THEN-key ELSE-key RETURN-key NULL-key TRUE-key FALSE-key))
+(define-empty-tokens group-b (EOF PLUS SEMICOLON EQUAL LT GT ASSIGN NOT-EQUAL MINUS MULTIPLY DIVIDE OPEN-PAR CLOSE-PAR OPEN-BRA CLOSE-BRA COMMA WHILE-key DO-key END-key IF-key THEN-key PLUS-EQUAL MINUSE-EQUAL MULTIPLY-EQUAL MDIVIDE-EQUAL MOD-EQUAL POW-EQUAL DD-EQUAL EQUAL-EQUAL LT-EQUAL GT-EQUAL DD MOD POW ELSE-key RETURN-key NULL-key TRUE-key FALSE-key GLOBAL-key DEF-key FOR-key in pass break continue or and not))
 
 ;(define-datatype keyword keyword?)
 ;(define-datatype exp exp?)
@@ -451,7 +474,7 @@
 ;(evaluate "code.myc")
 
 ;(run-program (open-input-string "fib = [1, 1, 2, 3, 5, 8, 13]; c = 0; sum = 0; while c < 7 do sum = sum + fib[c]; c = c + 1 end; return sum"))
-(run-program (open-input-string "if 2 > 3 : return True else return False end"))
+(run-program (open-input-string "if 2 > -3 : return True else return False end"))
 ;(run-program (open-input-string "x = [[\"salam\", None], false]; return x[0][1] == None"))
 ;(run-program (open-input-string "x = -[[true, 1], false]"))
 ;(run-program (open-input-string "x = False; return x"))
